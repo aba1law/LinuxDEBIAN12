@@ -15,7 +15,7 @@ This manual is tested on Debian 12
 ### Make sure iptables persist across reboots.
 Download iptables-persistent and save config
 
-### Preparation
+## Preparation
 Make sure that you turned on ip forwarding and gived ip addresses to all interfaces you need 
 
 1. Open file for IP forward
@@ -33,7 +33,7 @@ ip a
 ```
 
 
-### Installation
+# Installation & Configuration
 
 First of all you need to install iptables on your device
 
@@ -79,7 +79,7 @@ sudo iptables -A INPUT -p tcp --dport 995 -j ACCEPT
 sudo netfilter-persistent save
 ```
 
-### More commands
+## More commands
 
 ## If you wanna check configs
 ```shell
