@@ -80,19 +80,16 @@ sudo netfilter-persistent save
 ```
 
 ## More commands
-
-## If you wanna check configs
+### If you wanna check configs
 ```shell
 sudo iptables -L -v
 ```
-
-## If you wanna delete
+### If you wanna delete
 For example delete ssh:
 ```shell
 sudo iptables -D INPUT -p tcp --dport 22 -j ACCEPT
 ```
-
-## If you wanna reset all configs
+### If you wanna reset all configs
 ```shell
 sudo iptables -F
 ```
