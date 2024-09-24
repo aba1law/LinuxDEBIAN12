@@ -14,9 +14,6 @@ This manual is tested on Debian 12
 
 ### Make sure iptables persist across reboots.
 Download iptables-persistent and save config
-```shell
-sudo netfilter-persistent save
-```
 
 ### Preparation
 Make sure that you turned on ip forwarding and gived ip addresses to all interfaces you need 
