@@ -57,7 +57,11 @@ sudo nft add rule ip nat postrouting ip saddr 10.0.0.0/24 oifname "ens3" masquer
 sudo nft add rule inet filter forward ip saddr 10.0.0.0/24 oifname "ens3" accept
 sudo nft add rule inet filter forward ip daddr 10.0.0.0/24 iifname "ens3" accept
 ```
-6. Save configurations
+6. Allow localhost to internet
+```shell
+sudo nft add rule inet filter input ct state established,related accept
+```
+7. Save configurations
 ```shell
 sudo nft list ruleset > /etc/nftables.conf
 sudo systemctl enable nftables
