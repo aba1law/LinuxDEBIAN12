@@ -74,7 +74,15 @@ sudo iptables -A INPUT -p tcp --dport 993 -j ACCEPT
 sudo iptables -A INPUT -p tcp --dport 110 -j ACCEPT
 sudo iptables -A INPUT -p tcp --dport 995 -j ACCEPT
 ```
-7. Save configurations
+7. Allow lan addresses
+```shell
+sudo iptables -t nat -A POSTROUTING -o ens3 -j MASQUERADE
+sudo iptables -t nat -A POSTROUTING -s 192.168.0.0/16 -o ens3 -j MASQUERADE
+sudo iptables -A INPUT -s 192.168.0.0/16 -j ACCEPT
+sudo iptables -A FORWARD -s 192.168.0.0/16 -j ACCEPT
+sudo iptables -A FORWARD -d 192.168.0.0/16 -j ACCEPT
+```
+8. Save configurations
 ```shell
 sudo netfilter-persistent save
 ```
