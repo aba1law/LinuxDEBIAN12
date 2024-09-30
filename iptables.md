@@ -20,12 +20,7 @@ Make sure that you turned on ip forwarding and gived ip addresses to all interfa
 
 1. Open file for IP forward
 ```shell
-sudo nano /etc/sysctl.conf
-```
-Here uncomment "#net.ipv4.ip_forward=1"
-Delete #
-```shell
-net.ipv4.ip_forward=1
+sudo sysctl -w net.ipv4.ip_forward=1
 ```
 2. Check ip addresses
 ```shell
