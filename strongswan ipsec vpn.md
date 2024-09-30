@@ -33,7 +33,7 @@ conn tunnel
         right=(second_firwall_ip)
         rightsubnet=(second_firewall_lan_ip)
         ike=aes256-sha256-ecp256
-        esp=aes256-sha256!
+        esp=aes256-sha256
         keyingtries=0
         ikelifetime=1h
         lifetime=8h
