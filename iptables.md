@@ -97,6 +97,38 @@ sudo iptables -D INPUT -p tcp --dport 22 -j ACCEPT
 sudo iptables -F
 ```
 
+# Commands for strongswan 
+
+In my topology i have 2nd network in another city and i connected them with strongswan ipsec
+
+### Allow udp500, 4500
+```shell
+sudo iptables -A INPUT -p udp --dport 500 -j ACCEPT
+sudo iptables -A OUTPUT -p udp --sport 500 -j ACCEPT
+sudo iptables -A INPUT -p udp --dport 4500 -j ACCEPT
+sudo iptables -A OUTPUT -p udp --sport 4500 -j ACCEPT
+```
+### Allow ESP 
+```shell
+sudo iptables -A INPUT -p esp -j ACCEPT
+sudo iptables -A OUTPUT -p esp -j ACCEPT
+```
+### Allow IPsec if it use forwarding
+```shell
+sudo iptables -A FORWARD -p esp -j ACCEPT
+sudo iptables -A FORWARD -p udp --dport 500 -j ACCEPT
+sudo iptables -A FORWARD -p udp --dport 4500 -j ACCEPT
+```
+### Allow icmp
+```shell
+sudo iptables -A INPUT -p icmp -j ACCEPT
+sudo iptables -A OUTPUT -p icmp -j ACCEPT
+```
+### Save
+```shell
+sudo netfilter-persistent save
+```
+
 ## External links
 [debian.org - connection](https://www.debian.org/)
 [ubuntu.com - connection](https://ubuntu.com/server/docs)
