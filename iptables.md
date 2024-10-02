@@ -73,9 +73,9 @@ sudo iptables -A INPUT -p tcp --dport 995 -j ACCEPT
 ```shell
 sudo iptables -t nat -A POSTROUTING -o ens3 -j MASQUERADE
 sudo iptables -t nat -A POSTROUTING -s 192.168.0.0/16 -o ens3 -j MASQUERADE
-sudo iptables -A INPUT -s 192.168.0.0/16 -j ACCEPT
-sudo iptables -A FORWARD -s 192.168.0.0/16 -j ACCEPT
-sudo iptables -A FORWARD -d 192.168.0.0/16 -j ACCEPT
+sudo iptables -A INPUT -s 10.0.0.0/16 -j ACCEPT
+sudo iptables -A FORWARD -s 10.0.0.0/16 -j ACCEPT
+sudo iptables -A FORWARD -d 10.0.0.0/16 -j ACCEPT
 ```
 8. Save configurations
 ```shell
