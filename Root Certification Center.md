@@ -63,12 +63,9 @@ default_md          = sha256
 x509_extensions     = v3_ca
 
 [ req_distinguished_name ]
-countryName                 = Country Name (2 letter code)
-countryName_default         = KZ
-organizationName            = Organization Name (eg, company)
-organizationName_default    = IT Net Kz Inc.
-commonName                  = Common Name (eg, fully qualified host name)
-commonName_default          = IT Net Kz Inc. Root CA
+countryName                 = KZ
+organizationName            = IT Net Kz Inc.
+commonName                  = IT Net Kz Inc. Root CA
 
 [ v3_ca ]
 subjectKeyIdentifier = hash
