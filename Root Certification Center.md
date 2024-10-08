@@ -13,91 +13,65 @@ This manual is tested on Debian 12
 ###For first install packages
 ```shell
 sudo apt update && sudo apt upgrade
-sudo apt install openssl
+sudo apt install easy-rsa
 ```
 
 ## Setup
 
 ### File structure configuration
 ```shell
-sudo mkdir -p /ca/{certs,crl,newcerts,private}
-sudo chmod 700 /ca/private
-sudo touch /ca/index.txt
-sudo echo 1000 > /ca/serial
+mkdir /ca
 ```
-### Open file "/ca/openssl.cnf"
+### Create the symlinks with the ln command
 ```shell
-sudo nano /ca/openssl.cnf
+ln -s /usr/share/easy-rsa/* /ca/
 ```
-Than text this settings:
-```shell
-[ ca ]
-default_ca = CA_default
-
-[ CA_default ]
-dir               = /ca
-certs             = $dir/certs
-crl_dir           = $dir/crl
-database          = $dir/index.txt
-new_certs_dir     = $dir/newcerts
-certificate       = $dir/CA.crt
-serial            = $dir/serial
-private_key       = $dir/private/CA.key
-RANDFILE          = $dir/private/.rand
-default_days      = 3650
-default_md        = sha256
-preserve          = no
-policy            = policy_match
-
-[ policy_match ]
-countryName             = match
-organizationName        = match
-organizationalUnitName  = optional
-commonName              = supplied
-
-[ req ]
-default_bits        = 4096
-distinguished_name  = req_distinguished_name
-string_mask         = utf8only
-default_md          = sha256
-x509_extensions     = v3_ca
-
-[ req_distinguished_name ]
-countryName                 = KZ
-organizationName            = IT Net Kz Inc.
-commonName                  = IT Net Kz Inc. Root CA
-
-[ v3_ca ]
-subjectKeyIdentifier = hash
-authorityKeyIdentifier = keyid:always,issuer
-basicConstraints = critical, CA:true
-keyUsage = critical, digitalSignature, cRLSign, keyCertSign
-```
-### Create key, than cert
+### Restrict access to your new PKI directory
 ```shel
+chmod 700 /ca
+```
+### Initialize the PKI
+```shell
 cd /ca
 ```
 ```shell
-sudo openssl genrsa -out private/CA.key 4096
+./easyrsa init-pki
+```
+You must see 
+```shell
+init-pki complete; you may now create a CA or requests.
+Your newly created PKI dir is: /ca/pki
+```
+### Create vars file
+```shell
+cd /ca
+nano vars
 ```
 ```shell
-sudo openssl req -config openssl.cnf -key private/CA.key -new -x509 -days 3650 -sha256 -extensions v3_ca -out certs/CA.crt
-```
-### Create cert for server
-```shell
-sudo openssl genrsa -out /ca/private/server.key 4096
+set_var EASYRSA_REQ_COUNTRY    "KZ"
+set_var EASYRSA_REQ_ORG        "IT Net Kz Inc."
+set_var EASYRSA_REQ_CN         "itnet.kz"
 ```
 ```shell
-sudo openssl req -new -key /ca/private/server.key -out /ca/server.csr -subj "/C=KZ/O=IT Net Kz Inc./CN=your.domain.com"
+./easyrsa build-ca
 ```
+Output:
 ```shell
-sudo openssl ca -config /ca/openssl.cnf -in /ca/server.csr -out /ca/certs/server.crt -days 365 -batch
+Enter New CA Key Passphrase:
+Re-Enter New CA Key Passphrase:
+. . .
+Common Name (eg: your user, host, or server name) [Easy-RSA CA]:
+
+CA creation complete and you may now import and sign cert requests.
+Your new CA certificate file for publishing is at:
+/ca/pki/ca.crt
 ```
 ### Check cert
 ```shell
-openssl verify -CAfile /ca/certs/CA.crt /ca/certs/server.crt
+cat /ca/pki/ca.crt
 ```
 
 ## External links
 [debian.org - connection](https://www.debian.org/)
 [ubuntu.com - connection](https://ubuntu.com/server/docs)
+[digitalocean.com - connection]([https://ubuntu.com/server/docs](https://www.digitalocean.com/community/tutorials/how-to-set-up-and-configure-a-certificate-authority-ca-on-debian-11#step-3-creating-a-certificate-authority))
