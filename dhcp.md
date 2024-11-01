@@ -17,7 +17,7 @@ nano /etc/dhcp/dhcpd.conf
 subnet 10.0.1.0 netmask 255.255.255.0 {
   range 10.0.1.10 10.0.1.100;
   option routers 10.0.1.1;
-  option domain-name-servers 8.8.8.8, 8.8.4.4;
+  option domain-name-servers 10.0.2.2;
   default-lease-time 600;
   max-lease-time 7200;
 }
