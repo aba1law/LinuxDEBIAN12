@@ -113,10 +113,10 @@ sudo iptables -A OUTPUT -p udp --sport 4500 -j ACCEPT
 ```shell
 sudo iptables -A INPUT -p esp -j ACCEPT
 sudo iptables -A OUTPUT -p esp -j ACCEPT
+sudo iptables -A FORWARD -p esp -j ACCEPT
 ```
 ### Allow IPsec if it use forwarding
 ```shell
-sudo iptables -A FORWARD -p esp -j ACCEPT
 sudo iptables -A FORWARD -p udp --dport 500 -j ACCEPT
 sudo iptables -A FORWARD -p udp --dport 4500 -j ACCEPT
 ```
