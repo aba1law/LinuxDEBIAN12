@@ -53,7 +53,7 @@ set_var EASYRSA_REQ_ORG        "IT Net Kz Inc."
 set_var EASYRSA_REQ_CN         "itnet.kz"
 ```
 ```shell
-./easyrsa build-ca
+./easyrsa build-ca nopass
 ```
 Output:
 ```shell
