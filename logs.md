@@ -18,34 +18,40 @@ sudo apt install -y rsyslog
 
 1. Create files for logs
 ```shell
-cd /var/log
-mkdir custom
-```
-```shell
-cd /var/log/custom
+sudo mkdir -p /var/log/custom
+cd /var/log/custom/
 mkdir dhcp.log
 mkdir mail.log
 mkdir dump.log
 ```
+```shell
+sudo chown -R root:adm /var/log/custom
+sudo chmod -R 755 /var/log/custom
+```
 2. Edit rsyslog file
 ```shell
-sudo nano /etc/rsyslog.conf
+sudo nano /etc/rsyslog.d/custom.conf
 ```
 Than text into this file next configs:
 ```shell
-:programname, isequal, "isc-dhcp-server" /var/log/dhcp.logs
-:programname, isequal, "postfix" /var/log/mail.logs
-:programname, !isequal, "dhcpd" :programname, !isequal, "postfix" /var/log/dump.logs
+:programname, isequal, "dhcpd" /var/log/custom/dhcp.log
+:programname, isequal, "mail" /var/log/custom/mail.log
+*.*;auth,authpriv.none,mail.none,cron.none /var/log/custom/dump.log
 ```
 3. Restart rsyslog
 ```shell
 systemctl restart rsyslog
 ```
+4. Create test log
+```shell
+logger -p daemon.info "Test log for DHCP service"
+logger -p mail.info "Test log for mail service"
+```
 4. Check logs
 ```shell
-ls -l /var/log/dhcp.logs
-ls -l /var/log/mail.logs
-ls -l /var/log/dump.logs
+cat /var/log/dhcp.logs
+cat /var/log/mail.logs
+cat /var/log/dump.logs
 ```
 
 ## External links
