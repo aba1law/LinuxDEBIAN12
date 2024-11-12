@@ -46,11 +46,11 @@ zone "0.10.in-addr.arpa" {
 ```
 ```shell
 cd /etc/bind
-sudo cp /etc/bind/db.local /etc/bind/zones/db.itnet.kz
+sudo cp /etc/bind/db.local /etc/bind/db.itnet.kz
 cp db.127 /var/lib/bind/db.reverse
 ```
 ```shell
-sudo nano /etc/bind/zones/db.itnet.kz
+sudo nano /etc/bind/db.itnet.kz
 ```
 ```shell
 ;
