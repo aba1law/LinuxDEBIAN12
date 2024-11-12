@@ -27,8 +27,8 @@ options {
 
     dnssec-validation no;
 
-    listen-on { any; };
     listen-on-v6 { any; };
+    listen-on port 53 { 127.0.0.1; 172.16.0.6; };
 };
 ```
 ```shell
