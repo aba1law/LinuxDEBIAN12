@@ -1,9 +1,18 @@
+# Configure DNS server on debian 12
+
+## Preparation
+
+- Install packages
+- Configure server
+
+### Install
 ```shell
 sudo apt update
 ```
 ```shell
 sudo apt install bind9 dnsutils
 ```
+### Edit file with dns settings
 ```shell
 sudo nano /etc/bind/named.conf.options
 ```
@@ -31,6 +40,7 @@ options {
     listen-on port 53 { 127.0.0.1; 10.0.1.2; };
 };
 ```
+### Create zones
 ```shell
 sudo nano /etc/bind/named.conf.local
 ```
@@ -44,11 +54,13 @@ zone "0.10.in-addr.arpa" {
     file "/var/lib/bind/db.reverse";
 };
 ```
+### Copy content in old files
 ```shell
 cd /etc/bind
 sudo cp /etc/bind/db.local /etc/bind/db.itnet.kz
 cp db.127 /var/lib/bind/db.reverse
 ```
+### Add records in zones
 ```shell
 sudo nano /etc/bind/db.itnet.kz
 ```
@@ -90,6 +102,7 @@ $TTL    604800
 6.0     IN      PTR     srv1.lab.local.
 7.0     IN      PTR     srv2.lab.local.
 ```
+### Check
 ```shell
 named-checkzone 0.10.in-addr.arpa /var/lib/bind/db.reverse
 ```
@@ -109,3 +122,7 @@ domain itnet.kz
 ```shell
 systemctl restart networking
 ```
+
+## External links
+[debian.org - connection](https://www.debian.org/)
+[ubuntu.com - connection](https://ubuntu.com/server/docs)
