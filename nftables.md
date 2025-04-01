@@ -45,7 +45,8 @@ sudo nft add chain inet filter output { type filter hook output priority 0 \; po
 sudo nft add rule inet filter input iifname "lo" accept
 sudo nft add rule inet filter input tcp dport 22 accept
 sudo nft add rule inet filter input icmp type echo-request accept
-sudo nft add rule inet filter input udp dport 53 accept  
+sudo nft add rule inet filter input udp dport 53 accept
+sudo nft add rule inet filter input tcp dport 53 accept  
 sudo nft add rule inet filter input tcp dport 80 accept  
 sudo nft add rule inet filter input tcp dport 443 accept 
 ```
