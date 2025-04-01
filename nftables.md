@@ -54,9 +54,9 @@ sudo nft add rule inet filter input tcp dport 443 accept
 ```shell
 sudo nft add table ip nat
 sudo nft add chain ip nat postrouting { type nat hook postrouting priority 100 \; policy accept \; }
-sudo nft add rule ip nat postrouting ip saddr 172.16.1.0/24 oifname "ens3" masquerade
-sudo nft add rule inet filter forward ip saddr 172.16.1.0/24 oifname "ens3" accept
-sudo nft add rule inet filter forward ip daddr 172.16.1.0/24 iifname "ens3" accept
+sudo nft add rule ip nat postrouting ip saddr 10.0.0.0/8 oifname "ens3" masquerade
+sudo nft add rule inet filter forward ip saddr 10.0.0.0/8 oifname "ens3" accept
+sudo nft add rule inet filter forward ip daddr 10.0.0.0/8 iifname "ens3" accept
 ```
 6. Allow localhost to internet
 ```shell
