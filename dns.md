@@ -80,7 +80,7 @@ $TTL    604800
 srv01    IN      A       10.1.10.2
 ```
 ```shell
-sudo named-checkzone int.worldskills.org /var/lib/bind/db.int.worldskills.org
+sudo named-checkzone int.worldskills.org etc/bind/db.int.worldskills.org
 ```
 ```shell
 nano /var/lib/bind/db.reverse
