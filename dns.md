@@ -18,7 +18,7 @@ sudo nano /etc/bind/named.conf.options
 ```
 ```shell
 acl "trusted" {
-    10.0.0.0/16;
+    10.0.0.0/8;
     localhost;
     localnets;
 };
@@ -45,9 +45,9 @@ options {
 sudo nano /etc/bind/named.conf.local
 ```
 ```shell
-zone "itnet.kz" {
+zone "int.worldskills.org" {
     type master;
-    file "/etc/bind/db.itnet.kz";
+    file "/etc/bind/db.int.worldskills.org";
 };
 zone "0.10.in-addr.arpa" {
     type master;
@@ -57,31 +57,30 @@ zone "0.10.in-addr.arpa" {
 ### Copy content in old files
 ```shell
 cd /etc/bind
-sudo cp /etc/bind/db.local /etc/bind/db.itnet.kz
+sudo cp /etc/bind/db.local /etc/bind/db.int.worldskills.org
 cp db.127 /var/lib/bind/db.reverse
 ```
 ### Add records in zones
 ```shell
-sudo nano /etc/bind/db.itnet.kz
+sudo nano /etc/bind/db.int.worldskills.org
 ```
 ```shell
 ;
 ; BIND data file for local loopback interface
 ;
 $TTL    604800
-@       IN      SOA     srv1.lab.local. admin.lab.local. (
+@       IN      SOA     srv01.int.worldskills.org. admin.int.worldskills.org. (
                               2         ; Serial
                          604800         ; Refresh
                           86400         ; Retry
                         2419200         ; Expire
                          604800 )       ; Negative Cache TTL
 ;
-@       IN      NS      srv1.lab.local.
-srv1    IN      A       172.16.0.6
-srv2    IN      A       172.16.0.7
+@       IN      NS      srv01.int.worldskills.org.
+srv1    IN      A       10.1.10.2
 ```
 ```shell
-named-checkzone lab.local /var/lib/bind/db.lab.local
+sudo named-checkzone int.worldskills.org /var/lib/bind/db.int.worldskills.org
 ```
 ```shell
 nano /var/lib/bind/db.reverse
@@ -91,16 +90,15 @@ nano /var/lib/bind/db.reverse
 ; BIND reverse data file for local loopback interface
 ;
 $TTL    604800
-@       IN      SOA     srv1.lab.local. admin.lab.local. (
+@       IN      SOA     srv01.int.worldskills.org. admin.int.worldskills.org. (
                               1         ; Serial
                          604800         ; Refresh
                           86400         ; Retry
                         2419200         ; Expire
                          604800 )       ; Negative Cache TTL
 ;
-@       IN      NS      srv1.lab.local.
-6.0     IN      PTR     srv1.lab.local.
-7.0     IN      PTR     srv2.lab.local.
+@       IN      NS      srv01.int.worldskills.org.
+2.10    IN      PTR     srv01.int.worldskills.org.
 ```
 ### Check
 ```shell
@@ -116,8 +114,8 @@ systemctl status bind9
 nano /etc/resolv.conf
 ```
 ```shell
-nameserver 10.0.2.2
-domain itnet.kz
+nameserver 10.1.10.2
+domain int.worldskill.org
 ```
 ```shell
 systemctl restart networking
