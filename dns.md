@@ -77,7 +77,7 @@ $TTL    604800
                          604800 )       ; Negative Cache TTL
 ;
 @       IN      NS      srv01.int.worldskills.org.
-srv1    IN      A       10.1.10.2
+srv01    IN      A       10.1.10.2
 ```
 ```shell
 sudo named-checkzone int.worldskills.org /var/lib/bind/db.int.worldskills.org
