@@ -17,7 +17,7 @@ ip a
 2. Installation
 ```shell
 sudo apt update 
-sudo apt install -y ntpsec
+apt -y install chrony
 ```
 
 # Configuration main NTP server
@@ -26,37 +26,14 @@ sudo apt install -y ntpsec
 ```shell
 sudo timedatectl set-timezone Asia/Almaty
 ```
-2. Open file "/etc/ntpsec/ntp.conf"
+2. Open file "/etc/chrony/chrony.conf"
 ```shell
-sudo nano /etc/ntpsec/ntp.conf
+sudo nano /etc/chrony/chrony.conf
 ```
-Than text stratum 2 servers command
+Than text stratum 2 servers command in line 8
 ```shell
-server 2.kz.pool.ntp.org iburst
-server 3.kz.pool.ntp.org iburst
-```
-3. Allow access for lan
-```shell
-allow (your subnet) 
-```
-4. Restart service
-```shell
-sudo systemctl restart ntpsec
-```
-
-# Configuration second NTP server
-
-1. Set timezone
-```shell
-sudo timedatectl set-timezone Asia/Almaty
-```
-2. Open file "/etc/ntpsec/ntp.conf"
-```shell
-sudo nano /etc/ntpsec/ntp.conf
-```
-Than text stratum 2 servers command
-```shell
-server (ip of main server) iburst
+#pool 2.debian.pool.ntp.org iburst (comment this)
+pool ntp.nict.jp iburst 
 ```
 3. Allow access for lan
 ```shell
@@ -64,7 +41,7 @@ allow (your subnet)
 ```
 4. Restart service
 ```shell
-sudo systemctl restart ntpsec
+systemctl restart chrony
 ```
 
 # Configuration for client devices
